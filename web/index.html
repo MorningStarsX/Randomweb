@@ -813,6 +813,7 @@ body.dark-mode .fold-toggle { color: #7dd3fc; }
             <button id="importBtn" class="ghost">导入名单</button>
             <button id="exportBtn" class="ghost">导出名单</button>
             <button id="downloadBtn" class="ghost">下载 JSON 文件</button>
+            <button id="fileSelectBtn" class="ghost">📂 选择本地文件</button>
             <input type="file" id="fileInput" accept=".json" style="display:none" />
           </div>
         </div>
@@ -905,14 +906,14 @@ body.dark-mode .fold-toggle { color: #7dd3fc; }
 </div>
 
 <script>
-/* ======== 默认名单 ======== */
+/* ======== 默认名单(假名) ======== */
 const DEFAULT_LIST = {
-"曾佳怡":1.0, "陈凯":1.0, "陈俐肜":1.0, "陈芋雄":1.0, "陈哲宇":1.0, "陈子萓":1.0, "邓蓉清":1.0, "杜韦鹏":1.0, "方毅":1.0, "符丰牧":1.0,
-"符智晨":1.0, "黄艳萍":1.0, "黄志威":1.0, "揭弘毅":1.0, "揭子尧":1.0, "赖聪":1.0, "赖婷":1.0, "赖亚宁":1.0, "赖雨欣":1.0, "赖钰玲":1.0,
-"李诚铚":1.0, "李华珍":1.0, "李惠东":1.0, "李哲聪":1.0, "廖鸿瑞":1.0, "廖俊":1.0, "刘扬":1.0, "刘艺":1.0, "马哲灏":1.0, "聂娅馨":1.0,
-"瞿世浓":1.0, "饶俊彦":1.0, "饶淑玲":1.0, "饶文垒":1.0, "饶咏坤":1.0, "魏如俊":1.0, "魏志雄":1.0, "魏智萱":1.0, "温粤凡":1.0, "吴博宇":1.0,
-"吴海艳":1.0, "吴和兴":1.0, "夏浩轩":1.0, "夏禹豪":1.0, "肖志远":1.0, "谢佳童":1.0, "谢近哲":1.0, "谢雨欣":1.0, "幸天睿":1.0, "熊宇勋":1.0,
-"徐子豪":1.0, "杨嘉琦":1.0, "叶丹":1.0, "余凡":1.0, "余梦瑶":1.0
+"张三":1.0, "李四":1.0, "王五":1.0, "赵六":1.0, "钱七":1.0, "孙八":1.0, "周九":1.0, "吴十":1.0, "郑十一":1.0, "冯十二":1.0,
+"陈十三":1.0, "楚十四":1.0, "魏十五":1.0, "蒋十六":1.0, "沈十七":1.0, "韩十八":1.0, "杨十九":1.0, "朱二十":1.0, "秦廿一":1.0, "尤廿二":1.0,
+"许廿三":1.0, "何廿四":1.0, "吕廿五":1.0, "施廿六":1.0, "孔廿七":1.0, "曹廿八":1.0, "严廿九":1.0, "华三十":1.0, "金三一":1.0, "陶三二":1.0,
+"姜三三":1.0, "戚三四":1.0, "谢三五":1.0, "邹三六":1.0, "喻三七":1.0, "柏三八":1.0, "水三九":1.0, "窦四十":1.0, "章四一":1.0, "云四二":1.0,
+"苏四三":1.0, "潘四四":1.0, "葛四五":1.0, "范四六":1.0, "彭四七":1.0, "鲁四八":1.0, "韦四九":1.0, "昌五十":1.0, "苗五一":1.0, "凤五二":1.0,
+"花五三":1.0, "方五四":1.0, "俞五五":1.0, "任五六":1.0, "袁五七":1.0
 };
 
 /* ======== State & helpers ======== */
@@ -1419,17 +1420,32 @@ function importFromTextarea(){
   if(!txt) { alert('请输入 JSON'); return; }
   try{
     const obj = JSON.parse(txt);
-    if(typeof obj !== 'object'){ alert('格式错误'); return; }
-    state.list = {};
-    Object.entries(obj).forEach(([k,v])=>{
-      const num = Number(v);
-      state.list[k] = isNaN(num) ? 0 : num;
+    // 修复①②：排除 null 和数组（typeof null/[] 均为 'object'）
+    if(obj === null || typeof obj !== 'object' || Array.isArray(obj)){
+      alert('格式错误：请提供 {"姓名": 权重} 格式的 JSON 对象');
+      return;
+    }
+    const newList = {};
+    let hasInvalid = false;
+    Object.entries(obj).forEach(([k, v])=>{
+      const name = String(k).trim();
+      if(!name) return; // 跳过空键名
+      let num = Number(v);
+      // 修复③：负数或非数字统一归 0
+      if(isNaN(num) || num < 0){ num = 0; hasInvalid = true; }
+      newList[name] = num;
     });
+    if(Object.keys(newList).length === 0){
+      alert('导入失败：名单为空');
+      return;
+    }
+    state.list = newList;
+    state.cooldowns = {}; // 修复④：清除旧冷却，防止残留无效冷却
     saveState();
     renderList();
-    alert('导入成功');
+    alert(hasInvalid ? '导入成功（部分权重值无效，已自动置为 0）' : '导入成功');
   }catch(e){
-    alert('JSON 解析失败');
+    alert('JSON 解析失败，请检查格式是否正确');
   }
 }
 
@@ -1439,13 +1455,18 @@ function exportToTextarea(){
 
 function downloadJsonFile(){
   const data = JSON.stringify(state.list, null, 2);
-  const blob = new Blob([data], {type:'application/json'});
+  // 修复②：添加 charset=utf-8，防止中文乱码
+  const blob = new Blob([data], {type:'application/json;charset=utf-8'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = 'name_list.json';
+  // 修复③：挂载到 DOM 后触发，兼容 Firefox
+  document.body.appendChild(a);
   a.click();
-  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+  // 修复①：延迟释放，确保浏览器完成下载触发后再回收
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 /* ======== 初始化和事件绑定 ======== */
@@ -1531,6 +1552,7 @@ function init(){
   el('closeModal').addEventListener('click', closeModal);
   el('animationModal').addEventListener('click', (e)=> { if(e.target === el('animationModal')) closeAnimationModal(); });
   el('cancelAnimation').addEventListener('click', closeAnimationModal);
+  el('fileSelectBtn').addEventListener('click', ()=> el('fileInput').click());
   el('fileInput').addEventListener('change', (e)=>{
     const f = e.target.files[0];
     if(!f) return;
@@ -1538,20 +1560,42 @@ function init(){
     reader.onload = function(ev){
       try{
         const obj = JSON.parse(ev.target.result);
-        if(typeof obj !== 'object') { alert('格式错误'); return; }
-        state.list = {};
-        Object.entries(obj).forEach(([k,v])=>{
-          const num = Number(v);
-          state.list[k] = isNaN(num) ? 0 : num;
+        // 修复①②：排除 null 和数组
+        if(obj === null || typeof obj !== 'object' || Array.isArray(obj)){
+          alert('格式错误：请提供 {"姓名": 权重} 格式的 JSON 对象');
+          return;
+        }
+        const newList = {};
+        let hasInvalid = false;
+        Object.entries(obj).forEach(([k, v])=>{
+          const name = String(k).trim();
+          if(!name) return;
+          let num = Number(v);
+          // 修复③：负数或非数字归 0
+          if(isNaN(num) || num < 0){ num = 0; hasInvalid = true; }
+          newList[name] = num;
         });
+        if(Object.keys(newList).length === 0){
+          alert('导入失败：名单为空');
+          return;
+        }
+        state.list = newList;
+        state.cooldowns = {}; // 修复④：清除旧冷却
         saveState();
         renderList();
-        alert('导入成功');
+        alert(hasInvalid ? '导入成功（部分权重值无效，已自动置为 0）' : '导入成功');
       }catch(err){
-        alert('JSON 解析失败');
+        alert('JSON 解析失败，请检查文件内容格式');
+      }finally{
+        e.target.value = ''; // 修复⑤：重置 input，允许重复选同一文件
       }
     };
-    reader.readAsText(f);
+    // 修复⑦：添加错误处理
+    reader.onerror = function(){
+      alert('文件读取失败，请重试');
+      e.target.value = '';
+    };
+    reader.readAsText(f, 'utf-8'); // 修复⑥：显式指定 UTF-8 防止中文乱码
   });
 
   el('toggleHistoryStyle').addEventListener('click', ()=>{
