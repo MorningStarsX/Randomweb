@@ -30,6 +30,8 @@ jobs:
       # 1. 检出代码
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          node-version: '24.x'
         
       # 2. 检查 web 文件夹是否存在
       - name: Check web folder
