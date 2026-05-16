@@ -1604,6 +1604,11 @@ function init(){
     renderHistory();
   });
 }
+//右键屏蔽
+document.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  return false;
+});
 
 // 初始化
 init();
