@@ -2,9 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>权重随机抽人(MorningStarsX)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>权重随机抽人 + 转盘抽奖</title>
 <style>
+
 /* ===== Global vars ===== */
 :root{
   --accent:#2563eb;
@@ -542,58 +543,6 @@ footer {
   .add-row input{width:100%;}
 }
 
-/* ===== 夜间模式开关 (moon/sun toggle) ===== */
-.toggle-switch {
-  position: relative;
-  width: 100px;
-  height: 50px;
-  --light: #d8dbe0;
-  --dark: #28292c;
-  transform: scale(0.52);
-  transform-origin: center center;
-  flex-shrink: 0;
-  /* 补偿 scale 后的空白 */
-  margin: -12px -24px;
-}
-.switch-label {
-  position: absolute;
-  width: 100%;
-  height: 50px;
-  /* 默认（未勾选）= 白天：浅色背景 */
-  background-color: var(--light);
-  border-radius: 25px;
-  cursor: pointer;
-  border: 3px solid var(--light);
-}
-.checkbox { position: absolute; display: none; }
-.slider {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 25px;
-  transition: 0.3s;
-}
-/* 勾选（夜间）= 深色背景 */
-.checkbox:checked ~ .slider { background-color: var(--dark); }
-.slider::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  /* 默认（白天）= 实心圆（太阳），无月牙阴影 */
-  box-shadow: none;
-  background-color: var(--dark);
-  transition: 0.3s;
-}
-/* 勾选（夜间）= 月牙效果，滑到右侧 */
-.checkbox:checked ~ .slider::before {
-  transform: translateX(50px);
-  background-color: var(--light);
-  box-shadow: inset -12px 4px 0px 0px var(--dark);
-}
 
 /* ===== jp-matrix 夜间背景 ===== */
 .jp-matrix {
@@ -651,7 +600,7 @@ body.dark-mode html,
 html.dark-mode  { background: #05050a !important; }
 body.dark-mode .container { position: relative; z-index: 1; }
 body.dark-mode .card {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(28, 32, 42, 0.45);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.25);
@@ -665,73 +614,76 @@ body.dark-mode .small { color: #94a3b8; }
 body.dark-mode .name  { color: #e2e8f0; }
 body.dark-mode .weight { color: #7dd3fc; }
 body.dark-mode .name-list {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(28, 32, 42, 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 body.dark-mode .name-list input {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
 }
+body.dark-mode .name-list input.editWeight { border: 1px solid rgba(255, 255, 255, 0.25) !important; }
 body.dark-mode .list-row:hover { background: rgba(255,255,255,0.1); }
 body.dark-mode #historyList {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(28, 32, 42, 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 body.dark-mode .chip {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
 }
 body.dark-mode .big-display {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(28, 32, 42, 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
-body.dark-mode .btn { background-color: rgba(0, 0, 0, 0.55); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); }
+body.dark-mode .btn { background-color: rgba(40, 46, 60, 0.45); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.25); }
 body.dark-mode .btn p::before { color: #ffffff; }
 body.dark-mode .btn p::after  { color: #ffffff; }
 body.dark-mode button.ghost {
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(40, 46, 60, 0.45);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 body.dark-mode .icon-btn {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
   box-shadow: none;
 }
 body.dark-mode .input {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
   box-shadow: 2.5px 3px 0 rgba(255, 255, 255, 0.25);
 }
 body.dark-mode .input:focus { box-shadow: 5.5px 7px 0 rgba(255, 255, 255, 0.25); }
 body.dark-mode .add-row input {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
 }
 body.dark-mode select, body.dark-mode textarea {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(40, 46, 60, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
 }
 body.dark-mode footer { border-top-color: rgba(255, 255, 255, 0.25); color: #ffffff; }
 body.dark-mode .modal, body.dark-mode .animation-modal {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(28, 32, 42, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 body.dark-mode .wheel-label-display {
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(28, 32, 42, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
 }
@@ -751,11 +703,182 @@ body.dark-mode .fold-toggle { color: #ffffff; }
 .modal-blur .jp-matrix {
   filter: blur(5px) brightness(0.85);
 }
+
+
+/* ===== 设置按钮 ===== */
+.icon-btn.settings-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: auto; height: auto;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+  background-color: #444141;
+  border: none;
+  box-shadow: none;
+}
+.icon-btn.settings-btn:hover { background-color: #555252; border: none; }
+body.dark-mode .icon-btn.settings-btn { background: rgba(40,44,60,0.75); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; }
+/* ===== 设置弹窗（复用主卡片样式） ===== */
+.settings-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 9999; padding: 20px; }
+.settings-modal.hidden { display: none !important; }
+.settings-modal-content { background: #ffffff; padding: 22px 24px; border-radius: var(--radius); max-width: 420px; width: 92%; max-height: 80vh; overflow-y: auto; color: #111827; box-shadow: 0 10px 40px rgba(0,0,0,0.35); position: relative; border: 1px solid #eef2ff; }
+.settings-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.settings-modal-header strong { font-size: 17px; }
+.settings-close-btn { width: 32px; height: 32px; font-size: 20px; cursor: pointer; background: transparent; color: #666; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+.settings-close-btn:hover { background: #f1f5f9; color: #111827; }
+.settings-modal-body { display: flex; flex-direction: column; gap: 14px; }
+.settings-section-title { font-size: 13px; color: var(--muted); margin: 0; letter-spacing: 0.3px; }
+body.dark-mode .settings-modal-content { background: rgba(28, 32, 42, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+body.dark-mode .settings-close-btn { color: #ccc; }
+body.dark-mode .settings-close-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ===== 玻璃单选组（背景选择） ===== */
+.glass-radio-group {
+  --bg: rgba(120, 120, 140, 0.12);
+  --text: #444;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: inset 1px 1px 4px rgba(255,255,255,0.25), inset -1px -1px 6px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.12);
+  overflow: hidden;
+  width: 100%;
+}
+.glass-radio-group input { display: none; }
+.glass-radio-group label { flex: 1; display: flex; align-items: center; justify-content: center; min-height: 44px; font-size: 14px; padding: 0.7rem 1.4rem; cursor: pointer; font-weight: 600; letter-spacing: 0.3px; color: var(--text); position: relative; z-index: 2; transition: color 0.3s ease-in-out; }
+.glass-radio-group label:hover { color: #000; }
+.glass-radio-group input:checked + label { color: #fff; }
+body.dark-mode .glass-radio-group { --text: #ddd; }
+body.dark-mode .glass-radio-group label:hover { color: #fff; }
+.glass-glider { position: absolute; top: 0; left: 0; bottom: 0; height: 25%; width: 100%; border-radius: 0.9rem; z-index: 1; transition: transform 0.5s cubic-bezier(0.37,1.95,0.66,0.56), background 0.4s ease-in-out, box-shadow 0.4s ease-in-out; }
+#bg-gradient:checked ~ .glass-glider { transform: translateY(0%); background: linear-gradient(135deg, rgba(245,120,2,0.55), rgba(202,179,214,0.7), rgba(148,201,233,0.8)); box-shadow: 0 0 18px rgba(245,140,2,0.5), 0 0 10px rgba(255,255,255,0.4) inset; }
+#bg-dark:checked ~ .glass-glider { transform: translateY(100%); background: linear-gradient(135deg, #1a1a2e77, #16213ecc); box-shadow: 0 0 18px rgba(0,150,255,0.5), 0 0 10px rgba(100,200,255,0.3) inset; }
+#bg-skew:checked ~ .glass-glider { transform: translateY(200%); background: linear-gradient(135deg, #232526cc, #4b6cb7aa); box-shadow: 0 0 18px rgba(75,108,183,0.5), 0 0 10px rgba(168,237,234,0.3) inset; }
+#bg-grid:checked ~ .glass-glider { transform: translateY(300%); background: linear-gradient(135deg, #ffffff99, #e1e1e1); box-shadow: 0 0 18px rgba(255,255,255,0.6), 0 0 10px rgba(200,200,200,0.4) inset; }
+
+/* ===== 背景层：斜纹黑（简约斜向黑） ===== */
+.bg-skew {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(135deg, #232526 0px, #232526 60px, #23252699 70px, #414345 130px);
+  opacity: 0; transition: opacity 0.6s ease;
+}
+.bg-skew.active { opacity: 1; }
+.bg-skew svg { position: absolute; width: 200%; height: 200%; left: -30%; top: -20%; opacity: 0.7; z-index: 1; animation: cubeMove 18s linear infinite alternate; }
+@keyframes cubeMove { from { transform: translateY(0) scale(1); } to { transform: translateY(-20%) scale(1.02) rotate(1deg); } }
+
+/* ===== 背景层：网格白 ===== */
+.bg-grid {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+  --color: #E1E1E1;
+  background-color: #F3F3F3;
+  background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
+  background-size: 55px 55px;
+  opacity: 0; transition: opacity 0.6s ease;
+}
+.bg-grid.active { opacity: 1; }
+
+/* ===== 高级设置弹窗 ===== */
+.advanced-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 9999; padding: 20px; }
+.advanced-modal.hidden { display: none !important; }
+.advanced-modal-content { background: #ffffff; padding: 22px 24px; border-radius: var(--radius); max-width: 440px; width: 92%; max-height: 85vh; overflow-y: auto; color: #111827; box-shadow: 0 10px 40px rgba(0,0,0,0.35); position: relative; border: 1px solid #eef2ff; }
+.advanced-modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.advanced-modal-header strong { font-size: 17px; }
+.advanced-close-btn { width: 32px; height: 32px; font-size: 20px; cursor: pointer; background: transparent; color: #666; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+.advanced-close-btn:hover { background: #f1f5f9; color: #111827; }
+.advanced-modal-body { display: flex; flex-direction: column; gap: 10px; }
+.advanced-modal-body label { font-size: 13px; color: var(--muted); }
+.advanced-modal-body input, .advanced-modal-body select, .advanced-modal-body textarea { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #e6eefc; font-size: 14px; color: #111827; background: #fff; box-sizing: border-box; }
+.advanced-modal-body input:focus, .advanced-modal-body select:focus, .advanced-modal-body textarea:focus { outline: none; border-color: var(--accent); }
+body.dark-mode .advanced-modal-content { background: rgba(28, 32, 42, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+body.dark-mode .advanced-modal-header strong { color: #e2e8f0; }
+body.dark-mode .advanced-modal-body label { color: #94a3b8; }
+body.dark-mode .advanced-modal-body input, body.dark-mode .advanced-modal-body select, body.dark-mode .advanced-modal-body textarea { background: rgba(40, 46, 60, 0.45); border: 1px solid rgba(255, 255, 255, 0.25); color: #ffffff; }
+body.dark-mode .advanced-close-btn { color: #ccc; }
+body.dark-mode .advanced-close-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+
+/* ===== 界面切换 ===== */
+body { overflow-x: hidden; }
+* { box-sizing: border-box; }
+.page { width: 100%; min-height: 100vh; transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease; }
+.page--main { position: relative; z-index: 1; }
+.page--wheel { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh; z-index: 5; transform: translateX(100%); background: transparent; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
+.page--wheel.active { transform: translateX(0); }
+.page--main.slide-left { transform: translateX(-35%); opacity: 0; pointer-events: none; }
+
+.edge-btn { position: fixed; top: 50%; transform: translateY(-50%); z-index: 100; width: 26px; height: 72px; background: rgba(0,0,0,0.35); color: #fff; border: 1px solid rgba(255,255,255,0.25); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.25s ease, width 0.25s ease; user-select: none; -webkit-user-select: none; padding: 0; }
+.edge-btn:hover { background: rgba(0,0,0,0.55); width: 32px; }
+.edge-btn--right { right: 0; border-radius: 8px 0 0 8px; border-right: none; }
+.edge-btn--left { left: 0; border-radius: 0 8px 8px 0; border-left: none; }
+
+.pw-app { max-width: 1100px; width: 100%; margin: 28px auto; padding: 18px; position: relative; z-index: 1; color: #111827; overflow-x: hidden; }
+.pw-app h1 { font-size: 20px; margin: 0 0 18px; font-weight: 600; text-align: center; }
+.pw-controls { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+.pw-left { flex: 1; min-width: 280px; max-width: 540px; margin: 0 auto; width: 100%; }
+.pw-right { flex: 1; min-width: 280px; width: 100%; }
+.pw-card { background: var(--card); padding: 16px; border-radius: var(--radius); box-shadow: 0 6px 18px rgba(12,20,30,0.04); border: 1px solid #eef2ff; margin-bottom: 12px; }
+.pw-card h2 { margin: 0 0 10px; font-size: 1.2em; }
+.pw-wheel-wrap { position: relative; max-width: 100%; height: 500px; border-radius: var(--radius); margin: 0 auto 10px; background: var(--card); border: 1px solid #eef2ff; box-shadow: 0 6px 18px rgba(12,20,30,0.04); overflow: hidden; padding: 10px; }
+.pw-wheel-wrap canvas { width: 100%; height: 100%; display: block; border-radius: 10px; }
+#pw-pointer { position: absolute; left: 50%; top: 16px; transform: translateX(-50%); font-size: 32px; color: #39a2db; z-index: 15; pointer-events: none; text-shadow: 0 0 15px rgba(57,162,219,0.8); filter: drop-shadow(0 0 12px rgba(57,162,219,0.6)); }
+.pw-actions { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+.pw-btn { width: 130px; height: 40px; font-size: 1.1em; cursor: pointer; background-color: #171717; color: #fff; border: none; border-radius: 5px; transition: all .4s; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+.pw-btn:hover { transform: translateY(-10px); box-shadow: 0 7px 0 -2px #f85959, 0 15px 0 -4px #39a2db, 0 16px 10px -3px #39a2db; }
+.pw-btn:active { transition: all 0.2s; transform: translateY(-5px); box-shadow: 0 2px 0 -2px #f85959, 0 8px 0 -4px #39a2db, 0 12px 10px -3px #39a2db; }
+input[type=file]{ color:#404040; padding:8px; background: rgba(0,0,0,0.05); border-radius: 5px; cursor: pointer; }
+input[type=file]::file-selector-button{ background:#39a2db; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; }
+.pw-bars { display: flex; flex-direction: column; gap: 6px; }
+.pw-bar { height: 18px; border-radius: 9px; background: #e5e7eb; overflow: hidden; position: relative; }
+.pw-bar > i { position: absolute; left: 8px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; padding-right: 8px; z-index: 1; }
+.pw-pool-row { display: flex; justify-content: space-between; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; background: rgba(0,0,0,0.03); }
+
+.pw-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); z-index: 9999; padding: 20px; }
+.pw-hidden { display: none !important; }
+.pw-modal-content { background: #ffffff; padding: 16px 20px; border-radius: 10px; max-width: 420px; width: 90%; max-height: 80vh; display: flex; flex-direction: column; color: #111827; box-shadow: 0 10px 30px rgba(0,0,0,0.6); position: relative; }
+.pw-modal-header { position: relative; width: 100%; height: 40px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px; }
+.pw-modal-close-btn { width: 36px; height: 36px; font-size: 24px; cursor: pointer; background-color: transparent; color: #333; border: 2px solid rgba(57,162,219,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; padding: 0; margin: 0; }
+.pw-modal-close-btn:hover { background-color: rgba(248,89,89,0.2); border-color: #f85959; color: #ff6b6b; transform: rotate(90deg) scale(1.1); }
+.pw-modal-body { padding-top: 10px; overflow-y: auto; flex: 1; }
+.pw-app-blurred { filter: blur(4px); pointer-events: none; user-select: none; transition: filter 0.25s ease; }
+
+body.dark-mode .pw-app { color: #e2e8f0; }
+body.dark-mode .pw-card, body.dark-mode .pw-wheel-wrap { background: rgba(28, 32, 42, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; box-shadow: none; }
+body.dark-mode .pw-modal-content { background: rgba(28, 32, 42, 0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+body.dark-mode .pw-pool-row { background: rgba(255,255,255,0.05); }
+body.dark-mode .pw-bar { background: rgba(0,0,0,0.6); }
+
+@media (max-width:900px){
+  .pw-controls{flex-direction:column;align-items:center;}
+  .pw-left,.pw-right{width:100%;max-width:100%;}
+  .pw-wheel-wrap{width:100%;max-width:100%;height:400px;}
+}
+@media (max-width:600px){
+  .pw-wheel-wrap{height:340px;}
+  .pw-actions{flex-direction:column;align-items:stretch;}
+  .pw-btn{width:100%;margin-bottom:8px;}
+}
+@media (max-width:500px){
+  .pw-wheel-wrap{height:300px;}
+}
+
 </style>
 </head>
 <body>
-
 <div class="jp-matrix" id="jpMatrix" aria-hidden="true"><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span><span>バ</span><span>ビ</span><span>ブ</span><span>ベ</span><span>ボ</span><span>パ</span><span>ピ</span><span>プ</span><span>ペ</span><span>ポ</span><span>ア</span><span>イ</span><span>ウ</span><span>エ</span><span>オ</span><span>カ</span><span>キ</span><span>ク</span><span>ケ</span><span>コ</span><span>サ</span><span>シ</span><span>ス</span><span>セ</span><span>ソ</span><span>タ</span><span>チ</span><span>ツ</span><span>テ</span><span>ト</span><span>ナ</span><span>ニ</span><span>ヌ</span><span>ネ</span><span>ノ</span><span>ハ</span><span>ヒ</span><span>フ</span><span>ヘ</span><span>ホ</span><span>マ</span><span>ミ</span><span>ム</span><span>メ</span><span>モ</span><span>ヤ</span><span>ユ</span><span>ヨ</span><span>ラ</span><span>リ</span><span>ル</span><span>レ</span><span>ロ</span><span>ワ</span><span>ヲ</span><span>ン</span><span>ガ</span><span>ギ</span><span>グ</span><span>ゲ</span><span>ゴ</span><span>ザ</span><span>ジ</span><span>ズ</span><span>ゼ</span><span>ゾ</span><span>ダ</span><span>ヂ</span><span>ヅ</span><span>デ</span><span>ド</span></div>
+<div class="bg-skew" id="bgSkew" aria-hidden="true"><svg preserveAspectRatio="xMidYMid slice" height="100%" width="100%" class="cube-svg" viewBox="0 0 120 104"><defs><linearGradient y2="100%" x2="100%" y1="0%" x1="0%" id="cube-dark"><stop stop-color="#232526" offset="0%"></stop><stop stop-color="#414345" offset="100%"></stop></linearGradient><linearGradient y2="0%" x2="100%" y1="100%" x1="0%" id="cube-mid"><stop stop-color="#4b6cb7" offset="0%"></stop><stop stop-color="#182848" offset="100%"></stop></linearGradient><linearGradient y2="100%" x2="0%" y1="0%" x1="100%" id="cube-light"><stop stop-color="#a8edea" offset="0%"></stop><stop stop-color="#fed6e3" offset="100%"></stop></linearGradient></defs></svg></div>
+<div class="bg-grid" id="bgGrid" aria-hidden="true"></div>
+<div class="page page--main" id="pageMain">
+
+
+
 <div class="container">
   <header>
     <div>
@@ -764,13 +887,8 @@ body.dark-mode .fold-toggle { color: #ffffff; }
     </div>
     <div class="controls">
       <button id="advancedBtn" class="ghost">高级设置</button>
-      <!-- 夜间模式开关 -->
-      <div class="toggle-switch" id="darkModeToggleWrap" title="夜间模式">
-        <label class="switch-label">
-          <input type="checkbox" class="checkbox" id="darkModeToggle">
-          <span class="slider"></span>
-        </label>
-      </div>
+      <!-- 背景选择按钮 -->
+      <button class="icon-btn settings-btn" id="settingsBtn" title="背景选择">背景选择</button>
     </div>
   </header>
 
@@ -804,36 +922,7 @@ body.dark-mode .fold-toggle { color: #ffffff; }
         </div>
       </div>
 
-      <div class="advanced-panel card" id="advancedPanel" style="display:none">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <strong>高级设置</strong>
-          <button id="closeAdvanced" class="ghost">关闭</button>
-        </div>
-
-        <div style="margin-top:10px;display:grid;gap:8px">
-          <label>权重更新量(抽中后乘以)</label>
-          <input id="multiplier" type="number" step="0.01" min="0" max="1" value="0.4" />
-
-          <label>抽取动画</label>
-          <select id="animationSelect">
-            <option value="roulette">轮盘式 (Roulette)</option>
-            <option value="spinner">简单滚动 (Spinner)</option>
-          </select>
-
-          <label>抽取冷却(秒)</label>
-          <input id="cooldownSeconds" type="number" value="30" min="0" style="width:120px" />
-
-          <label>导入名单(JSON 格式：{"名字":1.0, ...})</label>
-          <textarea id="importJson" placeholder='{"张三":1.0, "李四":1.0}' rows="4" style="padding:8px;border-radius:8px;border:1px solid #e6eefc"></textarea>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <button id="importBtn" class="ghost">导入名单</button>
-            <button id="exportBtn" class="ghost">导出名单</button>
-            <button id="downloadBtn" class="ghost">下载 JSON 文件</button>
-            <button id="fileSelectBtn" class="ghost">📂 选择本地文件</button>
-            <input type="file" id="fileInput" accept=".json" style="display:none" />
-          </div>
-        </div>
-      </div>
+      
 
     </div>
 
@@ -916,7 +1005,120 @@ body.dark-mode .fold-toggle { color: #ffffff; }
   </div>
 </div>
 
+
+</div>
+<div class="page page--wheel" id="pageWheel">
+
+<main class="pw-app">
+
+  <header>
+    <h1>随机抽奖转盘</h1>
+  </header>
+
+  <section class="pw-controls">
+    <div class="pw-left">
+      <div class="pw-wheel-wrap">
+        <!-- 改进的指针 -->
+        <div id="pw-pointer">▼</div>
+        <canvas id="pw-wheel"></canvas>
+      </div>
+
+      <div class="pw-actions">
+        <button id="pw-spinBtn" class="pw-btn">抽 取</button>
+        <input type="file" id="pw-importFile" accept=".json" />
+        <button id="pw-resetBtn" class="pw-btn">重 置</button>
+        <button id="pw-exportLogBtn" class="pw-btn">导 出 结果</button>
+      </div>
+    </div>
+
+    <div class="pw-right">
+      <section class="pw-card">
+        <h2>奖池（剩余）</h2>
+        <div id="pw-poolList" style="display:none"></div>
+        <div id="pw-poolBars" class="pw-bars"></div>
+      </section>
+
+      <section class="pw-card">
+        <h2>抽取记录</h2>
+        <ol id="pw-historyList"></ol>
+      </section>
+    </div>
+  </section>
+
+
+</div>
+
+  <footer>
+    <small>By-MorningStarsX</small>
+  </footer>
+</main>
+
+
+<!-- Result Modal -->
+<div id="pw-modal" class="pw-modal pw-hidden" role="dialog" aria-modal="true">
+  <div class="pw-modal-content">
+    <div class="pw-modal-header">
+      <button id="pw-modalClose" class="pw-modal-close-btn">×</button>
+    </div>
+    <div id="pw-modalBody" class="pw-modal-body"></div>
+  </div>
+</div>
+<button class="edge-btn edge-btn--right" id="toWheelBtn" title="切换到转盘">›</button>
+<button class="edge-btn edge-btn--left" id="toMainBtn" title="切换到主页">‹</button>
+<div class="advanced-modal hidden" id="advancedPanel">
+        <div class="advanced-modal-content">
+        <div class="advanced-modal-header">
+          <strong>高级设置</strong>
+          <button id="closeAdvanced" class="advanced-close-btn" title="关闭">×</button>
+        </div>
+        <div class="advanced-modal-body">
+          <label>权重更新量(抽中后乘以)</label>
+          <input id="multiplier" type="number" step="0.01" min="0" max="1" value="0.4" />
+          <label>抽取动画</label>
+          <select id="animationSelect">
+            <option value="roulette">轮盘式 (Roulette)</option>
+            <option value="spinner">简单滚动 (Spinner)</option>
+          </select>
+          <label>抽取冷却(秒)</label>
+          <input id="cooldownSeconds" type="number" value="30" min="0" style="width:120px" />
+          <label>导入名单(JSON 格式：{"名字":1.0, ...})</label>
+          <textarea id="importJson" placeholder='{"张三":1.0, "李四":1.0}' rows="4" style="padding:8px;border-radius:8px;border:1px solid #e6eefc"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="importBtn" class="ghost">导入名单</button>
+            <button id="exportBtn" class="ghost">导出名单</button>
+            <button id="downloadBtn" class="ghost">下载 JSON 文件</button>
+            <button id="fileSelectBtn" class="ghost">📂 选择本地文件</button>
+            <input type="file" id="fileInput" accept=".json" style="display:none" />
+          </div>
+        </div>
+        </div>
+      </div>
+
+<div class="settings-modal hidden" id="settingsModal">
+  <div class="settings-modal-content">
+    <div class="settings-modal-header">
+      <strong>设置</strong>
+      <button class="settings-close-btn" id="settingsClose" title="关闭">×</button>
+    </div>
+    <div class="settings-modal-body">
+      <p class="settings-section-title">背景切换</p>
+      <div class="glass-radio-group">
+        <input type="radio" name="bgMode" id="bg-gradient" value="gradient" />
+        <label for="bg-gradient">渐变彩</label>
+        <input type="radio" name="bgMode" id="bg-dark" value="dark" />
+        <label for="bg-dark">炫酷黑(卡顿警告)</label>
+        <input type="radio" name="bgMode" id="bg-skew" value="skew" />
+        <label for="bg-skew">斜纹黑</label>
+        <input type="radio" name="bgMode" id="bg-grid" value="grid" />
+        <label for="bg-grid">网格白</label>
+        <div class="glass-glider"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+
 /* ======== 默认名单(假名) ======== */
 const DEFAULT_LIST = {
 "张三":1.0, "李四":1.0, "王五":1.0, "赵六":1.0, "钱七":1.0, "孙八":1.0, "周九":1.0, "吴十":1.0, "郑十一":1.0, "冯十二":1.0,
@@ -1539,8 +1741,9 @@ function init(){
 
   // 事件
   el('drawBtn').addEventListener('click', doDraw);
-  el('advancedBtn').addEventListener('click', ()=> el('advancedPanel').style.display = 'block');
-  el('closeAdvanced').addEventListener('click', ()=> el('advancedPanel').style.display = 'none');
+  el('advancedBtn').addEventListener('click', ()=> el('advancedPanel').classList.remove('hidden'));
+  el('closeAdvanced').addEventListener('click', ()=> el('advancedPanel').classList.add('hidden'));
+  el('advancedPanel').addEventListener('click', (e)=> { if(e.target === el('advancedPanel')) el('advancedPanel').classList.add('hidden'); });
   el('toggleDefault').addEventListener('click', ()=>{
     const d = el('defaultCollapsed');
     if(d.style.display === 'none'){ d.style.display = 'block'; el('toggleDefault').innerText = '折叠默认名单'; }
@@ -1665,31 +1868,522 @@ document.addEventListener('contextmenu', e => {
 // 初始化
 init();
 
-/* ===== 夜间模式逻辑 ===== */
+/* ===== 背景切换逻辑 ===== */
 (function(){
-  const toggle = document.getElementById('darkModeToggle');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsModal = document.getElementById('settingsModal');
+  const settingsClose = document.getElementById('settingsClose');
   const matrix = document.getElementById('jpMatrix');
+  const bgSkew = document.getElementById('bgSkew');
+  const bgGrid = document.getElementById('bgGrid');
+  const radios = document.querySelectorAll('input[name="bgMode"]');
   const htmlEl = document.documentElement;
-  if(!toggle || !matrix) return;
-
-  function applyDark(isDark){
+  if(!settingsBtn || !settingsModal) return;
+  function applyBg(mode){
+    const isDark = (mode === 'dark' || mode === 'skew');
     document.body.classList.toggle('dark-mode', isDark);
-    matrix.classList.toggle('active', isDark);
-    htmlEl.style.background = isDark ? '#05050a' : '';
-    htmlEl.style.backgroundAttachment = isDark ? '' : 'fixed';
+    if(matrix) matrix.classList.toggle('active', mode === 'dark');
+    if(bgSkew) bgSkew.classList.toggle('active', mode === 'skew');
+    if(bgGrid) bgGrid.classList.toggle('active', mode === 'grid');
+    // html 背景：渐变彩（默认），其它模式隐藏默认渐变
+    if(mode === 'gradient'){
+      htmlEl.style.background = '';
+      htmlEl.style.backgroundAttachment = 'fixed';
+    } else if(mode === 'dark'){
+      htmlEl.style.background = '#05050a';
+      htmlEl.style.backgroundAttachment = 'fixed';
+    } else if(mode === 'skew'){
+      htmlEl.style.background = '#181c21';
+      htmlEl.style.backgroundAttachment = 'fixed';
+    } else if(mode === 'grid'){
+      htmlEl.style.background = '#F3F3F3';
+      htmlEl.style.backgroundAttachment = 'fixed';
+    }
+    // 同步单选按钮
+    radios.forEach(function(r){ r.checked = (r.value === mode); });
+    localStorage.setItem('bgMode', mode);
   }
-
-  // 从 localStorage 读取，默认 false（白天）
-  const saved = localStorage.getItem('darkMode') === 'true';
-  toggle.checked = saved;
-  applyDark(saved);
-
-  toggle.addEventListener('change', function(){
-    const isDark = toggle.checked;
-    applyDark(isDark);
-    localStorage.setItem('darkMode', isDark);
+  // 打开设置弹窗
+  settingsBtn.addEventListener('click', function(){ settingsModal.classList.remove('hidden'); });
+  // 关闭
+  settingsClose.addEventListener('click', function(){ settingsModal.classList.add('hidden'); });
+  settingsModal.addEventListener('click', function(e){ if(e.target === settingsModal) settingsModal.classList.add('hidden'); });
+  // 单选切换
+  radios.forEach(function(r){
+    r.addEventListener('change', function(){ if(r.checked) applyBg(r.value); });
   });
+  // 读取保存，默认 gradient（渐变彩）
+  const saved = localStorage.getItem('bgMode') || 'gradient';
+  applyBg(saved);
 })();
+
+</script>
+<script>
+
+/* ===== 转盘抽奖（独立作用域） ===== */
+(function(){
+
+const defaultPrizes = {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7};
+
+let initialPrizes = JSON.parse(JSON.stringify(defaultPrizes));
+let prizes = {};
+let history = [];
+
+const canvas = document.getElementById('pw-wheel');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('pw-spinBtn');
+const resetBtn = document.getElementById('pw-resetBtn');
+const importFile = document.getElementById('pw-importFile');
+const exportLogBtn = document.getElementById('pw-exportLogBtn');
+
+const poolList = document.getElementById('pw-poolList');
+const poolBars = document.getElementById('pw-poolBars');
+const historyList = document.getElementById('pw-historyList');
+
+const modal = document.getElementById('pw-modal');
+const modalBody = document.getElementById('pw-modalBody');
+const modalClose = document.getElementById('pw-modalClose');
+
+const loadingOverlay = document.getElementById('pw-loadingOverlay');
+
+let wheelRotation = 0; // 度数
+let isSpinning = false;
+let segments = []; // {name, weight, startAngle, endAngle, color}
+
+// 改进的页面加载处理
+function hideLoadingOverlay() {
+  // 强制隐藏加载动画
+  loadingOverlay.style.opacity = '0';
+  loadingOverlay.style.visibility = 'hidden';
+  loadingOverlay.style.pointerEvents = 'none';
+  loadingOverlay.style.display = 'none';
+  
+  // 确保页面内容可见
+  document.body.style.overflow = 'auto';
+}
+
+// 使用更可靠的加载检测
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM已加载，开始初始化...');
+  
+  // 延迟一点确保所有DOM元素已就绪
+  setTimeout(function() {
+    // 初始化应用
+    resetTo(defaultPrizes);
+    
+    // 隐藏加载动画
+    setTimeout(hideLoadingOverlay, 3000);
+  }, 100);
+});
+
+// 添加window.load作为备用
+window.addEventListener('load', function() {
+  console.log('页面完全加载，隐藏加载动画');
+  
+  // 如果DOMContentLoaded没有触发，这里作为备用
+  setTimeout(hideLoadingOverlay, 1000);
+  
+  // 确保页面内容显示
+  document.body.style.overflow = 'auto';
+});
+
+// 防止加载动画卡住：10秒后强制隐藏
+setTimeout(hideLoadingOverlay, 10000);
+
+function resetTo(prizeObj){
+  // 深拷贝奖池数据
+  prizes = JSON.parse(JSON.stringify(prizeObj));
+  initialPrizes = JSON.parse(JSON.stringify(prizeObj));
+  history = [];
+  drawHistory();
+  buildSegments();
+  renderWheel();
+  renderPool();
+  modal.classList.add('pw-hidden');
+  isSpinning = false;
+}
+
+function buildSegments(){
+  segments = [];
+  const entries = Object.entries(prizes).filter(([k,v]) => v>0);
+  const total = entries.reduce((s,[_k,v]) => s+v,0);
+  if(total === 0) {
+    segments = [];
+    return;
+  }
+  let start = 0;
+  let colorIndex = 0;
+  for(const [name, weight] of entries){
+    const angle = (weight/total) * 2 * Math.PI;
+    const seg = {name, weight, startAngle: start, endAngle: start+angle, color: pickColor(colorIndex++)};
+    segments.push(seg);
+    start += angle;
+  }
+}
+
+function pickColor(i){
+  const palette = ['#FFB86B','#FF7AB6','#6BD3FF','#A78BFA','#6BFFB8','#FFD36B','#6B9CFF','#FF6B6B'];
+  return palette[i % palette.length];
+}
+
+function renderWheel(){
+  const dpr = window.devicePixelRatio || 1;
+  const container = canvas.parentElement;
+  const size = Math.min(container.clientWidth, container.clientHeight, 500);
+  canvas.width = size * dpr;
+  canvas.height = size * dpr;
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const cx = canvas.width/dpr/2;
+  const cy = canvas.height/dpr/2;
+  const radius = Math.min(cx,cy) - 10;
+  ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+
+  // 绘制背景圆
+  ctx.save();
+  ctx.translate(cx,cy);
+  ctx.rotate(wheelRotation * Math.PI/180);
+  
+  // 绘制线段
+  if(segments.length === 0){
+    ctx.fillStyle = '#0b1220';
+    ctx.beginPath();
+    ctx.arc(0,0,radius,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    return;
+  }
+  
+  for(const seg of segments){
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.fillStyle = seg.color;
+    ctx.arc(0,0,radius, seg.startAngle, seg.endAngle);
+    ctx.closePath();
+    ctx.fill();
+
+    // 绘制标签
+    ctx.save();
+    const mid = (seg.startAngle+seg.endAngle)/2;
+    ctx.rotate(mid);
+    ctx.translate(radius*0.6,0);
+    ctx.rotate(Math.PI/2);
+    ctx.fillStyle = '#06131a';
+    const fontSize = Math.max(12, radius*0.07);
+    ctx.font = `bold ${fontSize}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(`${seg.name} (${seg.weight})`, 0, 0);
+    ctx.restore();
+  }
+  
+  // 中心圆
+  ctx.beginPath();
+  ctx.fillStyle = '#07121a';
+  ctx.arc(0,0, radius*0.18,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function renderPool(){
+  poolList.innerHTML = '';
+  poolBars.innerHTML = '';
+  const entries = Object.entries(prizes);
+  const total = entries.reduce((s,[_k,v]) => s+v,0);
+  
+  for(const [name, count] of entries){
+    const row = document.createElement('div');
+    row.className = 'pw-pool-row';
+    row.innerHTML = `<strong>${name}</strong><span>${count}</span>`;
+    poolList.appendChild(row);
+
+    const bar = document.createElement('div');
+    bar.className = 'pw-bar';
+    const inner = document.createElement('div');
+    inner.style.width = (total===0?0: (count/total*100)) + '%';
+    inner.style.height = '100%';
+    inner.style.background = pickColor(name.charCodeAt(0)%8);
+    inner.style.transition = 'width 0.5s ease';
+    
+    const label = document.createElement('i');
+    label.textContent = `${name} · ${count} (${total===0?0:( (count/total*100).toFixed(1))}%)`;
+    bar.appendChild(inner);
+    bar.appendChild(label);
+    poolBars.appendChild(bar);
+  }
+}
+
+function drawHistory(){
+  historyList.innerHTML = '';
+  for(const rec of history){
+    const li = document.createElement('li');
+    li.textContent = `${rec.time} — ${rec.name} · 概率 ${rec.chance}%`;
+    historyList.appendChild(li);
+  }
+}
+
+// 加权随机选择
+function weightedPick(){
+  const entries = Object.entries(prizes).filter(([k,v])=>v>0);
+  const total = entries.reduce((s,[_k,v])=>s+v,0);
+  if(total===0) return null;
+  const r = Math.random()*total;
+  let cum = 0;
+  for(const [name, weight] of entries){
+    cum += weight;
+    if(r < cum) return {name, weight, total};
+  }
+  return {name: entries[entries.length-1][0], weight: entries[entries.length-1][1], total};
+}
+
+function showModal(contentHtml){
+  modalBody.innerHTML = contentHtml;
+  modal.classList.remove('pw-hidden');
+  document.querySelector('.pw-app').classList.add('pw-app-blurred');
+}
+
+modalClose.addEventListener('click', ()=>{
+  modal.classList.add('pw-hidden');
+  document.querySelector('.pw-app').classList.remove('pw-app-blurred');
+});
+modal.addEventListener('click', (e)=>{
+  if(e.target===modal){
+    modal.classList.add('pw-hidden');
+    document.querySelector('.pw-app').classList.remove('pw-app-blurred');
+  }
+});
+
+spinBtn.addEventListener('click', function(){
+  if(isSpinning) return;
+  
+  const pick = weightedPick();
+  if(!pick){
+    showModal('<h3>奖池为空</h3><p>所有奖品已被抽完。</p>');
+    return;
+  }
+  
+// 添加指针动画效果
+const pointer = document.getElementById('pw-pointer');
+// 先停止浮动动画，然后添加发光动画
+pointer.style.animation = 'none';
+setTimeout(() => {
+  pointer.style.animation = 'glow 0.5s infinite alternate';
+}, 10);
+  
+  // 计算概率
+  const chance = ((pick.weight / pick.total) * 100).toFixed(2);
+
+  // 找到对应的扇形段
+  const seg = segments.find(s=>s.name===pick.name);
+  if(!seg){
+    console.error('找不到对应的扇形段:', pick.name);
+    return;
+  }
+  
+// 计算扇形中间的角度（弧度）
+const segMidRad = (seg.startAngle + seg.endAngle) / 2;
+// 转换为度数（canvas中0度在右侧，顺时针为正）
+let segMidDeg = segMidRad * 180 / Math.PI;
+
+// 将扇形中间旋转到指针位置
+// 添加额外的旋转圈数（3-6圈）
+const extraSpins = 3 + Math.floor(Math.random() * 3);
+// 正确计算目标角度：确保扇形中间指向顶部指针
+const target = 360 * extraSpins + (270 - segMidDeg); // 270度对应顶部指针位置
+  
+  isSpinning = true;
+  
+  // 动画参数
+  const duration = 4200; // 动画总时长
+  const startTime = Date.now();
+  const startRotation = wheelRotation % 360;
+  const rotationDelta = target - startRotation;
+  
+  // 动画函数
+  function animateSpin() {
+    const currentTime = Date.now();
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // 缓动函数：先快后慢
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    
+    // 更新旋转角度
+    wheelRotation = startRotation + rotationDelta * easeProgress;
+    
+    // 重绘转盘
+    renderWheel();
+    
+    if (progress < 1) {
+      // 继续动画
+      requestAnimationFrame(animateSpin);
+    } else {
+      // 动画完成
+      finalizePick(pick, chance);
+    }
+  }
+  
+  // 开始动画
+  requestAnimationFrame(animateSpin);
+});
+
+function finalizePick(pick, chance){
+  // 停止指针动画，恢复浮动动画
+  const pointer = document.getElementById('pw-pointer');
+  pointer.style.animation = 'none';
+  setTimeout(() => {
+    pointer.style.animation = 'float 3s ease-in-out infinite';
+  }, 10);
+  
+  // 用时间戳记录历史
+  const time = new Date().toLocaleString();
+  history.unshift({time, name: pick.name, chance});
+  
+  // 减少奖金
+  prizes[pick.name] = Math.max(0, prizes[pick.name]-1);
+  
+  // 确定稀有度：如果初始数量 <=1 或初始重量非常小 (<=1)
+  const init = initialPrizes[pick.name] || 0;
+  const isRare = init <= 1;
+  
+  // 显示模态
+  const special = isRare ? '<p style="color:#ffd700;font-weight:bold;">恭喜！抽中稀有奖品🎉</p>' : '';
+  const html = `<h3>抽中：${pick.name}</h3>
+    <p>本次概率：${chance}%</p>
+    ${special}
+    <p>剩余${pick.name}: ${prizes[pick.name]}</p>`;
+  showModal(html);
+
+  // UI
+  buildSegments();
+  renderWheel();
+  renderPool();
+  drawHistory();
+  isSpinning = false;
+
+  // 检查所有已绘制
+  const totalLeft = Object.values(prizes).reduce((s,v)=>s+v,0);
+  if(totalLeft === 0){
+    const rows = history.map(h=>`<li>${h.time} — ${h.name} · 概率 ${h.chance}%</li>`).join('');
+    showModal(`<h3>所有奖品已抽完</h3><p>以下为所有抽取记录：</p><ol>${rows}</ol>`);
+  }
+}
+
+resetBtn.addEventListener('click', ()=>{
+  if(isSpinning) return;
+  if(confirm('确认重置奖池为默认？')) resetTo(defaultPrizes);
+});
+
+importFile.addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try{
+      const obj = JSON.parse(ev.target.result);
+      // 验证：具有字符串键和正整数值的对象
+      const ok = Object.keys(obj).every(k => typeof k === 'string' && Number.isFinite(obj[k]) && obj[k] >= 0);
+      if(!ok) throw new Error('格式不正确: 必须为{"名称":数量,...}格式，数量为0或正整数');
+      
+      // 完全覆盖当前奖池
+      resetTo(obj);
+      alert(`导入成功！共导入${Object.keys(obj).length}种奖品`);
+      
+      // 清除文件输入，以便可以再次导入相同文件
+      importFile.value = '';
+      
+    }catch(err){
+      alert('导入失败: ' + err.message);
+      importFile.value = '';
+    }
+  };
+  reader.readAsText(f);
+});
+
+exportLogBtn.addEventListener('click', ()=>{
+  if(history.length === 0){
+    alert('目前没有抽取记录');
+    return;
+  }
+  // prepare CSV
+  const lines = ['time,name,chance'];
+  history.slice().reverse().forEach(h => lines.push(`${h.time},${h.name},${h.chance}`));
+  const blob = new Blob([lines.join('\n')], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `lottery_history_${Date.now()}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+});
+
+//右键屏蔽
+document.addEventListener('contextmenu', e => {
+  e.preventDefault();
+  return false;
+});
+
+// 刷新/关闭页面确认提示
+// (已移除 beforeunload 提示)
+
+
+// 在调整大小时重新绘制
+window.addEventListener('resize', ()=>{
+  renderWheel();
+});
+
+// 允许通过右键或类似方式将当前奖品配置导出为 JSON
+window.getCurrentPrizesAsJSON = () => JSON.stringify(prizes, null, 2);
+// 暴露转盘重绘钩子，供切换界面时使用
+window.__pwRenderWheel = function(){ renderWheel(); };
+
+})();
+
+</script>
+<script>
+
+/* ===== 界面切换逻辑 ===== */
+(function(){
+  var pageMain = document.getElementById('pageMain');
+  var pageWheel = document.getElementById('pageWheel');
+  var toWheelBtn = document.getElementById('toWheelBtn');
+  var toMainBtn = document.getElementById('toMainBtn');
+  var current = 'main';
+  var transitioning = false;
+  function goWheel(){
+    if(transitioning || current === 'wheel') return;
+    transitioning = true; current = 'wheel';
+    pageMain.classList.add('slide-left');
+    pageWheel.classList.add('active');
+    toMainBtn.style.display = 'flex';
+    toWheelBtn.style.display = 'none';
+    if(window.__pwRenderWheel) window.__pwRenderWheel();
+    setTimeout(function(){ transitioning = false; }, 480);
+  }
+  function goMain(){
+    if(transitioning || current === 'main') return;
+    transitioning = true; current = 'main';
+    pageWheel.classList.remove('active');
+    pageMain.classList.remove('slide-left');
+    toWheelBtn.style.display = 'flex';
+    toMainBtn.style.display = 'none';
+    setTimeout(function(){ transitioning = false; }, 480);
+  }
+  toWheelBtn.addEventListener('click', goWheel);
+  toMainBtn.addEventListener('click', goMain);
+  toMainBtn.style.display = 'none';
+  var x=0, y=0, t=0;
+  document.addEventListener('touchstart', function(e){ if(e.touches.length!==1) return; x=e.touches[0].clientX; y=e.touches[0].clientY; t=Date.now(); }, {passive:true});
+  document.addEventListener('touchend', function(e){ if(e.changedTouches.length!==1) return; var dx=e.changedTouches[0].clientX-x; var dy=e.changedTouches[0].clientY-y; var dt=Date.now()-t; var w=window.innerWidth; if(Math.abs(dx)>w*0.18 && Math.abs(dx)>Math.abs(dy)*1.5 && dt<1200){ if(current==='main' && dx<0) goWheel(); else if(current==='wheel' && dx>0) goMain(); } }, {passive:true});
+  var mx=0, my=0, mt=false;
+  document.addEventListener('mousedown', function(e){ mx=e.clientX; my=e.clientY; mt=true; });
+  document.addEventListener('mouseup', function(e){ if(!mt) return; mt=false; var dx=e.clientX-mx; var dy=e.clientY-my; var w=window.innerWidth; if(Math.abs(dx)>w*0.18 && Math.abs(dx)>Math.abs(dy)*1.5){ if(current==='main' && dx<0) goWheel(); else if(current==='wheel' && dx>0) goMain(); } });
+})();
+
 </script>
 </body>
 </html>
