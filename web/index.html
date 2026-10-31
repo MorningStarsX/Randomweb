@@ -865,10 +865,24 @@ body { overflow-x: hidden; }
 .pw-wheel-wrap { position: relative; max-width: 100%; height: 500px; border-radius: var(--radius); margin: 0 auto 10px; background: var(--card); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 6px 18px rgba(12,20,30,0.04); overflow: hidden; padding: 10px; }
 .pw-wheel-wrap canvas { width: 100%; height: 100%; display: block; border-radius: 10px; }
 #pw-pointer { position: absolute; left: 50%; top: 16px; transform: translateX(-50%); font-size: 32px; color: #39a2db; z-index: 15; pointer-events: none; text-shadow: 0 0 15px rgba(57,162,219,0.8); filter: drop-shadow(0 0 12px rgba(57,162,219,0.6)); }
-.pw-actions { display: flex; gap: 8px; align-items: center; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+.pw-actions { display: flex; flex-direction: column; gap: 18px; align-items: center; margin-top: 8px; flex-wrap: nowrap; justify-content: center; }
 .pw-btn { width: 130px; height: 40px; font-size: 1.1em; cursor: pointer; background-color: #171717; color: #fff; border: none; border-radius: 5px; transition: all .4s; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
 .pw-btn:hover { transform: translateY(-10px); box-shadow: 0 7px 0 -2px #f85959, 0 15px 0 -4px #39a2db, 0 16px 10px -3px #39a2db; }
 .pw-btn:active { transition: all 0.2s; transform: translateY(-5px); box-shadow: 0 2px 0 -2px #f85959, 0 8px 0 -4px #39a2db, 0 12px 10px -3px #39a2db; }
+/* 主抽取按钮：放大，占据主要视觉焦点 */
+.pw-btn--spin { width: 100%; max-width: 380px; height: 64px; font-size: 1.5em; font-weight: 700; letter-spacing: 4px; border-radius: 10px; background: linear-gradient(135deg, #2b2b2b, #171717); }
+.pw-btn--spin:hover { transform: translateY(-6px); box-shadow: 0 8px 0 -2px #f85959, 0 16px 0 -4px #39a2db, 0 18px 14px -3px #39a2db; }
+.pw-btn--spin:active { transform: translateY(-3px); }
+/* 次要操作区：与抽取按钮拉开距离，尺寸缩小，降低误触概率 */
+.pw-secondary { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; width: 100%; margin-top: 4px; opacity: 0.85; }
+.pw-btn--minor { width: auto; min-width: 96px; height: 32px; font-size: 0.82em; letter-spacing: 0; background-color: rgba(23,23,23,0.55); border: 1px solid rgba(255,255,255,0.15); box-shadow: none; font-weight: 500; }
+.pw-btn--minor:hover { transform: none; background-color: rgba(23,23,23,0.8); box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
+.pw-btn--minor:active { transform: scale(0.97); box-shadow: none; }
+body.dark-mode .pw-btn--minor { background-color: rgba(30, 36, 48, 0.45); border: 1px solid rgba(255,255,255,0.25); }
+body.dark-mode .pw-btn--minor:hover { background-color: rgba(45, 52, 68, 0.7); }
+/* 导入文件：弱化为次要控件并缩小 */
+.pw-secondary input[type=file] { font-size: 11px; padding: 4px 6px; max-width: 210px; background: rgba(0,0,0,0.04); }
+.pw-secondary input[type=file]::file-selector-button { padding: 4px 10px; font-size: 11px; }
 input[type=file]{ color:#404040; padding:8px; background: rgba(0,0,0,0.05); border-radius: 5px; cursor: pointer; }
 input[type=file]::file-selector-button{ background:#39a2db; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; }
 .pw-bars { display: flex; flex-direction: column; gap: 6px; }
@@ -898,8 +912,12 @@ body.dark-mode .pw-bar { background: rgba(0,0,0,0.6); }
 }
 @media (max-width:600px){
   .pw-wheel-wrap{height:340px;}
-  .pw-actions{flex-direction:column;align-items:stretch;}
+  .pw-actions{flex-direction:column;align-items:stretch;gap:16px;}
   .pw-btn{width:100%;margin-bottom:8px;}
+  .pw-btn--spin{max-width:100%;height:66px;font-size:1.45em;margin-bottom:0;}
+  .pw-secondary{margin-top:10px;gap:8px;opacity:0.9;}
+  .pw-btn--minor{flex:1 1 auto;margin-bottom:0;font-size:0.8em;height:34px;}
+  .pw-secondary input[type=file]{max-width:100%;font-size:11px;}
 }
 @media (max-width:500px){
   .pw-wheel-wrap{height:300px;}
@@ -1062,10 +1080,12 @@ body.dark-mode .pw-bar { background: rgba(0,0,0,0.6); }
       </div>
 
       <div class="pw-actions">
-        <button id="pw-spinBtn" class="pw-btn">抽 取</button>
-        <input type="file" id="pw-importFile" accept=".json" />
-        <button id="pw-resetBtn" class="pw-btn">重 置</button>
-        <button id="pw-exportLogBtn" class="pw-btn">导 出 结果</button>
+        <button id="pw-spinBtn" class="pw-btn pw-btn--spin">抽 取</button>
+        <div class="pw-secondary">
+          <button id="pw-resetBtn" class="pw-btn pw-btn--minor">重 置</button>
+          <button id="pw-exportLogBtn" class="pw-btn pw-btn--minor">导出结果</button>
+          <input type="file" id="pw-importFile" accept=".json" />
+        </div>
       </div>
     </div>
 
